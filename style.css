@@ -1,0 +1,47 @@
+button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 30px;
+}
+
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+.container {
+	color: #0062cc;
+}
+
+.chip {
+  width: 500px;
+  background: #131521;
+  padding: 50px;
+  position: relative;
+  top: 80px;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.display-3,
+h3,
+h4,
+h6,
+button {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#weather-icon,
+#btnFahrenheit {
+  color: #2d314a;
+}
+
+#description {
+  position: relative;
+  top: -15px;
+  left: 20px;
+}
+
+#otherDetails {
+  margin-top: 20px;
+  color: #2d314a;
+}
