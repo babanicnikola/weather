@@ -1,8 +1,8 @@
-	var lats = [44.786568, 42.43041960000001, 45.8150108];
-	var longs = [20.44892159999995, 19.259364199999936, 15.981918899999982];
-
+	var lats = [44.802048, 42.43041960000001, 45.8150108, 47.497912, 44.42];
+	var longs = [20.466073599999998, 19.259364199999936, 15.981918899999982, 19.04023499999994, 26.10];
+	
 window.onload = function() {
-  recurse(0);
+	recurse(0);
 };
 // run through the array forever
 function recurse(counter) {
@@ -16,10 +16,12 @@ function recurse(counter) {
     lats.push(one);
 	longs.push(two);
     // run it again for the next number
+	
     setTimeout(function() {
         recurse(counter + 1);
-    }, 5000);
-// start it for the first number.
+    }, 5000); //Delay in seconds for city to change
+	console.log(counter);
+	return counter;
 }
 
 function showPosition(lat, lon) {
@@ -29,23 +31,28 @@ function showPosition(lat, lon) {
     $("#place").html(data.name + ", " + data.sys.country);
     $("#windSpeed").html(data.wind.speed + "km/h");
     $("#humidity").html(data.main.humidity + "%");
-    $("#celsius").html(data.main.temp.toFixed(1) + "°C");
-    $("#temp").html(data.main.temp.toFixed(1));
+    $("#temp").html(data.main.temp.toFixed(1) + " °C");
     $("#description").html(data.weather[0].description);
     
-    // Get Current Date and Time
+    // Get Current Time
     var dt = new Date();
-    $("#dateTime").html(dt.getDate() + "/" + (dt.getMonth()+1)  + "/" + dt.getFullYear() + " "+ dt.getHours() + ":" + dt.getMinutes());
-    
+    var time = dt.getHours();
+  
     // Weather Icon Conditions
     if(data.weather[0].description.indexOf("clouds")!== -1){
-      $("#weather-icon").html('<img src="icons/cloudy.png">');   
+      if (time < 17 && time > 6)
+			$("#weather-icon").html('<img src="icons/cloudy.png">');
+		else if (time > 16 || time < 7)
+			$("#weather-icon").html('<img src="icons/cloudy_night.png">');
     }
     else if(data.weather[0].description.indexOf("clear sky")!== -1){
-      $("#weather-icon").html('<img src="icons/sunny.png">');
+		if (time < 17 && time > 6)
+			$("#weather-icon").html('<img src="icons/sunny.png">');
+		else if (time > 16 || time < 7)
+			$("#weather-icon").html('<img src="icons/moon.png">');
     }
     else if(data.weather[0].description.indexOf("rain")!== -1){
-      $("#weather-icon").html('<img src="icons/windy.png">');
+      $("#weather-icon").html('<img src="icons/rain.png">');
     }
     else if(data.weather[0].description.indexOf("thunderstorm")!== -1){
       $("#weather-icon").html('<img src="icons/thunderstorm.png">');
@@ -57,14 +64,4 @@ function showPosition(lat, lon) {
       $("#weather-icon").html('<img src="icons/mist.png">');
     }
   });
-}
-
-                                           
-function getCelsius() {
-  $("#btnCelsius").css("color", "#fff");
-  $("#btnFahrenheit").css("color", "#2d314a");
-  $("#btnCelsius").prop("disabled", true);
-  $("#btnFahrenheit").prop("disabled", false);
-  
-  $("#temp").html(Math.round((parseInt($("#temp").text()) - 32)/ 1.8).toFixed(1));
 }
